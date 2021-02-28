@@ -34,7 +34,7 @@ function Home() {
                         return (
                             <div className="col-4" key={prod._id}>
                                 <Card
-                                    addtoCart="true"
+                                    addtoCart={true}
                                     product={prod}
                                 />
                             </div>
