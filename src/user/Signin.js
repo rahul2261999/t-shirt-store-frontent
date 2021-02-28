@@ -55,7 +55,7 @@ const Signin = () => {
                 return <Redirect to="/admin/dashboard" />
             } else {
                 return <Redirect to="/user/dashboard" />
-                return
+            
             }
         }
         if (isAuthenticated()) {

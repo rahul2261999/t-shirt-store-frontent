@@ -1,16 +1,32 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import Base from '../core/Base'
 import { isAuthenticated } from '../auth/helper'
-import { Link } from 'react-router-dom'
-import { createCategory } from './helper/adminapicall'
+import { Link, Redirect } from 'react-router-dom'
+import { getCategory, updateCategory } from './helper/adminapicall'
 
-const AddCategory = () => {
+const UpdateCategory = ({ match }) => {
 
     const [name, setName] = useState("")
+    const [isredirect, setRedirect] = useState(false)
     const [error, setError] = useState(false)
     const [success, setSuccess] = useState(false)
     const { user, token } = isAuthenticated()
 
+    const preload = (categoryId) => {
+        getCategory(categoryId)
+            .then(data => {
+                if (data.error) {
+                    console.log(data.error)
+                }
+                setName(data.name)
+
+            })
+            .catch(err => console.log(err))
+    }
+
+    useEffect(() => {
+        preload(match.params.categoryId)
+    }, [])
 
     const backBtn = () => (
         <div className="mt-5">
@@ -27,16 +43,18 @@ const AddCategory = () => {
         event.preventDefault()
         setError("");
         setSuccess(false)
-        createCategory(user._id, token, { name }).then(res => {
-            if (res.error) {
-                setError(true)
-            }
-            else {
-                setError("");
-                setSuccess(true)
-                setName("")
-            }
-        })
+        updateCategory(match.params.categoryId, user._id, token, { name })
+            .then(res => {
+                if (res.error) {
+                    setError(true)
+                }
+                else {
+                    setError("");
+                    setSuccess(true)
+                    setName("")
+                    setRedirect(true)
+                }
+            })
     }
 
     const SuccessMes = () => {
@@ -85,10 +103,11 @@ const AddCategory = () => {
                     {SuccessMes()}
                     {categoryForm()}
                     {backBtn()}
+                    {isredirect?<Redirect to="/admin/categories/" />:null}
                 </div>
             </div>
         </Base>
     )
 }
 
-export default AddCategory
+export default UpdateCategory

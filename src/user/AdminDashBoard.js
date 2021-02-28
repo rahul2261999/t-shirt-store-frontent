@@ -15,23 +15,49 @@ const AdminDashBoard = () => {
                 <ul className="list-group">
                     <li className="list-group-item">
                         <Link to="/admin/create/category" className="nav-link text-success"> Create Category </Link>
-                        <Link to="/admin/create/product" className="nav-link text-success"> Create Product </Link>
-                        <Link to="/admin/products" className="nav-link text-success"> Manage Products </Link>
-                        <Link to="/admin/orders" className="nav-link text-success"> Manage Orders </Link>
-
                     </li>
+                    <li className="list-group-item">
+                        <Link to="/admin/categories" className="nav-link text-success"> Manage Category </Link>
+                    </li>
+                     <li className="list-group-item">
+                        <Link to="/admin/create/product" className="nav-link text-success"> Create Product </Link>
+                    </li>
+                     <li className="list-group-item">
+                        <Link to="/admin/products" className="nav-link text-success"> Manage Products </Link>
+                    </li>
+                     <li className="list-group-item">
+                        <Link to="/admin/orders" className="nav-link text-success"> Manage Orders </Link>
+                    </li>
+
                 </ul>
             </div>
         )
     }
 
     const adminRightSide = () => {
-        
+        return (
+            <div className="card mb-4">
+                <h4 className="caed-header">Admin Information</h4>
+                <ul className="list-group">
+                    <li className="list-group-item">
+                        <span className="badge bg-success mr-2">Name:</span> {name}
+                    </li>
+                    <li className="list-group-item">
+                        <span className="badge bg-success mr-2">Email:</span> {email}
+                    </li>
+
+                    <li className="list-group-item">
+                        <span className="badge bg-danger mr-2">Admin Area</span>
+                    </li>
+
+                </ul>
+            </div>
+        )
     }
 
 
     return (
-        <Base title="Admin DashBoard" description="Manage Your All Product Here" className="conatiner bg-success p-4">
+        <Base title="Admin DashBoard" description="Manage Your All Product Here" className="container bg-success p-4">
             <div className="row">
                 <div className="col-3"> {adminLeftSide()}</div>
                 <div className="col-9"> {adminRightSide()}</div>
