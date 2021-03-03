@@ -48,20 +48,22 @@ const StripeCheckout = ({
             headers,
             body: JSON.stringify(body)
         })
-            .then(res => {
-                const orderData = {
-                    products: products,
-                    transaction_id: res.balance_transaction,
-                    amount: res.amount,
-                    status:"Processing"
+            .then(data => data.json().then(res => {
+                {
+                    const orderData = {
+                        products: products,
+                        transaction_id: res.balance_transaction,
+                        amount: res.amount,
+                        status: "Processing"
+                    }
+                    console.log(orderData)
+                    createOrder(userId, usertoken, orderData)
+                        .then(res => console.log(res))
+                        .catch(err => console.log(err))
+                    cartEmpty(() => console.log("cart is empty"))
+                    setReload(!reload)
                 }
-                console.log(res.body)
-                // createOrder(userId, usertoken, orderData)
-                //     .then(res => console.log(res))
-                //     .catch(err => console.log(err))
-                cartEmpty(()=>console.log("cart is empty"))
-                setReload(!reload)
-            })
+            }))
             .catch(err => console.log(err)
             )
     }
